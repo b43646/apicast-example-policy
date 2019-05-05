@@ -1,27 +1,26 @@
 {
   "$schema": "http://apicast.io/policy-v1/schema#manifest#",
-  "name": "Ngx example policy",
-  "summary": "Sets request headers",
+  "name": "Ngx WAF policy",
+  "summary": "Web Application Firewall",
   "description":
   ["This policy is meant to be just an example.",
-    "It sets request headers based on the configuration.",
-    "And prints a log entry for each header set. " ],
+    "It prevent sql injection based on configuration." ],
   "version": "1.0.0",
   "configuration": {
     "type": "object",
     "properties": {
-      "set_header": {
+      "set_regex": {
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
             "name": {
               "type": "string",
-              "description": "HTTP header name loren"
+              "description": "regex rule name"
             },
             "value": {
               "type": "string",
-              "description": "HTTP header value"
+              "description": "regex expression"
             }
           },
           "required": ["name", "value"]
