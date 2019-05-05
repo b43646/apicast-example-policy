@@ -35,7 +35,7 @@ local function deny_request(error_msg)
 end
 
 function _M:access()
-  if content then
+  if content ~= '' then
     deny_request(content)
   end
 end
