@@ -15,8 +15,8 @@ function _M.new(configuration)
 
   for _, header in ipairs(set_header) do
     insert(ops, function()
-      -- ngx.log(ngx.NOTICE, 'setting header: ', header.name, ' to: ', header.value)
-      -- ngx.req.set_header(header.name, header.value)
+      ngx.log(ngx.NOTICE, 'setting header: ', header.name, ' to: ', header.value)
+      ngx.req.set_header(header.name, header.value)
       ngx.req.read_body()
       local args, err = ngx.req.get_post_args()
       for key, val in pairs(args) do
