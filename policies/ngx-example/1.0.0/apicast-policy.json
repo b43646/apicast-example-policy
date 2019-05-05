@@ -17,7 +17,7 @@
           "properties": {
             "name": {
               "type": "string",
-              "description": "HTTP header name"
+              "description": "HTTP header name loren"
             },
             "value": {
               "type": "string",
