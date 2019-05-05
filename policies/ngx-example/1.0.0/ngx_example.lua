@@ -7,16 +7,6 @@ content=''
 function _M.new(configuration)
   local self = new(configuration)
 
-  ngx.req.read_body()
-  local args, err = ngx.req.get_post_args()
-  for key, val in pairs(args) do
-  	local ret = ngx.re.match(val, '.*%-%-.*')
-  	if ret then
-      		ngx.say("invalid username or password")
-                content="invalid username or password"
-        end
-  end
-
   return self
 end
 
@@ -28,13 +18,16 @@ end
 
 function _M:access()
 
-  ngx.req.read_body()
-  local args, err = ngx.req.get_post_args()
-  for key, val in pairs(args) do
-  	local ret = ngx.re.match(val, '.*%-%-.*')
-  	if ret then
-            content="invalid username or password"
-        end
+  if ngx.req.get_method() ==  ngx.HTTP_POST then
+  	ngx.req.read_body()
+	local args, err = ngx.req.get_post_args()
+  	for key, val in pairs(args) do
+                ngx.log(key,":",value)
+  		local ret = ngx.re.match(val, '.*%-%-.*')
+  		if ret then
+            		content="invalid username or password"
+        	end
+  	end
   end
 
   if content ~= '' then
