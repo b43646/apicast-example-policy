@@ -5,7 +5,7 @@ local new = _M.new
 function _M.new(configuration)
   local self = new(configuration)
 
---  ngx.req.read_body()
+  ngx.req.read_body()
 --  local args, err = ngx.req.get_post_args()
 --  local ret = ngx.re.match(val, '.*%-%-.*')
 --  if ret then
