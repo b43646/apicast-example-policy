@@ -2,7 +2,7 @@ local _M = require('apicast.policy').new('Nginx Example', '1.0.0')
 
 local new = _M.new
 
-content='Hello World'
+content=''
 
 function _M.new(configuration)
   local self = new(configuration)
@@ -28,8 +28,16 @@ function _M.new(configuration)
   return self
 end
 
-function _M:content()
-  return content
+local function deny_request(error_msg)
+  ngx.status = ngx.HTTP_FORBIDDEN
+  ngx.say(error_msg)
+  ngx.exit(ngx.status)
+end
+
+function _M:access()
+  if content then
+    deny_request(content)
+  end
 end
 
 
