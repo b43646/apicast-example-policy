@@ -10,19 +10,11 @@ function _M.new(configuration)
   ngx.req.read_body()
   local args, err = ngx.req.get_post_args()
   for key, val in pairs(args) do
-  	if key == "password" then
-  		local ret = ngx.re.match(val, '.*%-%-.*')
-  		if ret then
-      			ngx.say("invalid username or password")
-                        content="invalid username or password"
-                end
-  	elseif key == "password" then
-      		local ret2 = ngx.re.match(val, ".*%-%-.*")
-      		if ret2 then
-          		ngx.say("invalid username or password")
-                        content="invalid username or password"
-      		end
-  	end
+  	local ret = ngx.re.match(val, '.*%-%-.*')
+  	if ret then
+      		ngx.say("invalid username or password")
+                content="invalid username or password"
+        end
   end
 
   return self
@@ -35,6 +27,16 @@ local function deny_request(error_msg)
 end
 
 function _M:access()
+
+  ngx.req.read_body()
+  local args, err = ngx.req.get_post_args()
+  for key, val in pairs(args) do
+  	local ret = ngx.re.match(val, '.*%-%-.*')
+  	if ret then
+            content="invalid username or password"
+        end
+  end
+
   if content ~= '' then
     deny_request(content)
   end
