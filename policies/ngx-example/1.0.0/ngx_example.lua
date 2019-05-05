@@ -14,10 +14,11 @@ function _M.new(configuration)
   local set_header = config.set_header or {}
 
   for _, header in ipairs(set_header) do
-    insert(ops, function()
-      ngx.log(ngx.NOTICE, 'setting header: ', header.name, ' to: ', header.value)
-      ngx.req.set_header(header.name, header.value)
-    end)
+  --  insert(ops, function()
+  --    ngx.log(ngx.NOTICE, 'setting header: ', header.name, ' to: ', header.value)
+  --    ngx.req.set_header(header.name, header.value)
+  --  end)
+  insert(ops,access())
   end
 
   self.ops = ops
@@ -25,15 +26,14 @@ function _M.new(configuration)
   return self
 end
 
-function _M:access()
-
+function access()
       ngx.req.read_body()
       local args, err = ngx.req.get_post_args()
       local ret = ngx.re.match(val, '*\-\-*')
       if ret then
           ngx.say("invalid username or password")
       elseif key == "password" then
-          local ret2 = ngx.re.match(val, '*--*')
+          local ret2 = ngx.re.match(val, '*\-\-*')
           if ret2 then
               ngx.say("invalid username or password")
           end
