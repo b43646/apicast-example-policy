@@ -17,21 +17,6 @@ function _M.new(configuration)
     insert(ops, function()
       ngx.log(ngx.NOTICE, 'setting header: ', header.name, ' to: ', header.value)
       ngx.req.set_header(header.name, header.value)
-      ngx.req.read_body()
-      local args, err = ngx.req.get_post_args()
-      for key, val in pairs(args) do
-        if key == "username" then
-          local ret = ngx.re.match(val, '*--*')
-          if ret then
-            ngx.say("invalid username or password")
-          end
-        elseif key == "password" then
-          local ret2 = ngx.re.match(val, '*--*')
-          if ret2 then
-            ngx.say("invalid username or password")
-          end
-        end
-      end
     end)
   end
 
@@ -39,6 +24,22 @@ function _M.new(configuration)
 
   return self
 end
+
+function _M:access()
+
+      ngx.req.read_body()
+      local args, err = ngx.req.get_post_args()
+      local ret = ngx.re.match(val, '*\-\-*')
+      if ret then
+          ngx.say("invalid username or password")
+      elseif key == "password" then
+          local ret2 = ngx.re.match(val, '*--*')
+          if ret2 then
+              ngx.say("invalid username or password")
+          end
+      end
+end
+
 
 function _M:rewrite()
   for _,op in ipairs(self.ops) do
