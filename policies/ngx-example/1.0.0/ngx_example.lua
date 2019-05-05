@@ -7,7 +7,7 @@ function _M.new(configuration)
 
   ngx.req.read_body()
   local args, err = ngx.req.get_post_args()
-  local ret = ngx.re.match(val, '*\-\-*')
+  local ret = ngx.re.match(val, '.*%-%-.*')
   if ret then
       ngx.say("invalid username or password")
   elseif key == "password" then
