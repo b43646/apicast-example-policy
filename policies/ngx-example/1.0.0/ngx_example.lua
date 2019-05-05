@@ -23,7 +23,7 @@ function _M:access()
 	local args, err = ngx.req.get_post_args()
   	for key, val in pairs(args) do
                 ngx.log(key,":",value)
-  		local ret = ngx.re.match(val, '.*%-%-.*')
+  		local ret = string.match(val, ".*%-%-.*")
   		if ret then
             		content="invalid username or password"
         	end
