@@ -18,6 +18,7 @@ end
 
 function _M:access()
 
+  content=''
   ngx.req.read_body()
   local args, err = ngx.req.get_post_args()
   for key, val in pairs(args) do
