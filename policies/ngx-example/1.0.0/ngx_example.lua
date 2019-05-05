@@ -18,17 +18,15 @@ end
 
 function _M:access()
 
-  if ngx.req.get_method() ==  ngx.HTTP_POST then
-  	ngx.req.read_body()
-	local args, err = ngx.req.get_post_args()
-  	for key, val in pairs(args) do
-  		local ret = string.match(val, ".*%-%-.*")
-                ngx.say(key,":",val," ",ret)
-                ngx.exit(200)
-  		if ret ~= nil then
-            		content="invalid username or password"
-        	end
-  	end
+  ngx.req.read_body()
+  local args, err = ngx.req.get_post_args()
+  for key, val in pairs(args) do
+  	local ret = string.match(val, ".*%-%-.*")
+  --      ngx.say(key,":",val," ",ret)
+  --      ngx.exit(200)
+  	if ret ~= nil then
+            	content="invalid username or password"
+        end
   end
 
   if content ~= '' then
