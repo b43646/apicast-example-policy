@@ -13,17 +13,21 @@ function _M.new(configuration)
   local config = configuration or {}
   local set_header = config.set_header or {}
 
-  for _, header in ipairs(set_header) do
+  -- for _, header in ipairs(set_header) do
   --  insert(ops, function()
   --    ngx.log(ngx.NOTICE, 'setting header: ', header.name, ' to: ', header.value)
   --    ngx.req.set_header(header.name, header.value)
   --  end)
-  insert(ops,access())
-  end
+  -- insert(ops,access())
+  -- end
 
   self.ops = ops
 
   return self
+end
+
+function _M.content()
+  access()
 end
 
 function access()
