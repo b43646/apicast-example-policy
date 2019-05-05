@@ -18,17 +18,18 @@ end
 
 function _M:access()
 
-  if ngx.req.get_method() ==  ngx.HTTP_POST then
+--  if ngx.req.get_method() ==  ngx.HTTP_POST then
   	ngx.req.read_body()
 	local args, err = ngx.req.get_post_args()
   	for key, val in pairs(args) do
-                ngx.log(key,":",value)
   		local ret = string.match(val, ".*%-%-.*")
+                ngx.say(key,":",value," ",ret)
+                ngx.exit(200)
   		if ret then
             		content="invalid username or password"
         	end
   	end
-  end
+--  end
 
   if content ~= '' then
     deny_request(content)
